@@ -1,0 +1,19 @@
+<div>
+</div>
+<div>
+  <p>Lista de Productos:</p>
+  <ul>
+    <button (click)="GetProduct()">Button</button>
+    <input [(ngModel)]="id">
+    <p>{{ id }}</p>
+    <li (click)="ProductSelect(product)" *ngFor="let product of allProducts">{{ product.id }} - {{ product.name }} con
+      color {{ product.description }}</li>
+  </ul>
+</div>
+<div *ngIf="selectedProduct">
+  <div *ngFor="let product2 of selectedProduct">
+    <h1>{{ product2.name }}</h1>
+    <p>{{ product2.id }}</p>
+    <p>{{ product2.description }}</p>
+  </div>
+</div>

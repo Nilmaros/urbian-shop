@@ -1,0 +1,38 @@
+<section id="whatis" class="about-section text-center">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 mx-auto">
+        <h2 class="mb-4">Qu&eacute; es Urbian?</h2>
+        <p>
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+          Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+          Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+          Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+        </p>
+      </div>
+    </div>
+
+  <div *ngIf="currentProduct" class="producto">
+    <img [src]="currentProduct[0].img" class="img-fluid" [alt]="currentProduct[0].description"><br>
+    <div>{{ currentProduct[0].price }}</div>
+    <div class="row justify-content-lg-center">
+        <div class="input-group col-lg-3">
+            <span class="input-group-btn">
+                <button type="button" class="btn btn-dark btn-number" (click)="DecreaseProduct()"><fa-icon [icon]="faMinus"></fa-icon></button>
+            </span>
+            <input type="number" class="form-control input-number" [(ngModel)]="quantityAmountOfProduct">
+            <span class="input-group-btn">
+                <button type="button" class="btn btn-dark btn-number" (click)="IncreaseProduct()"><fa-icon [icon]="faPlus"></fa-icon></button>
+            </span>
+        </div>
+
+      <button type="button" class="btn btn-primary col-lg-2" (click)="GetProduct()">Cargar Producto</button>
+      <button type="button" class="btn btn-primary col-lg-2" (click)="NextProduct()">Siguiente</button>
+      <button type="button" class="btn btn-primary col-lg-2" (click)="AddToCart()">Comprar</button>
+      <button type="button" class="btn btn-primary col-lg-2" (click)="AddProduct()">A&ntilde;adir Producto</button>
+      <button type="button" class="btn btn-danger col-lg-2" (click)="RemoveProduct()">Remover Producto</button>
+    </div>
+    
+  </div>
+  </div>
+</section>
