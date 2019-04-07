@@ -13,24 +13,35 @@
     </div>
 
   <div *ngIf="currentProduct" class="producto">
-    <img [src]="currentProduct[0].img" class="img-fluid" [alt]="currentProduct[0].description"><br>
-    <div>{{ currentProduct[0].price }}</div>
+    <img [src]="currentProduct.img" class="img-fluid" [alt]="currentProduct.description"><br>
+    <div>{{ currentProduct.price }}</div>
+
+    <div *ngIf="updatingProduct">
+      <input type="text" [(ngModel)]="newImg">Img
+      <input type="text" [(ngModel)]="newDesc">Desc
+      <input type="text" [(ngModel)]="newName">Name
+      <input type="text" [(ngModel)]="newPrice">Price
+      <button type="button" class="btn btn-danger col-lg-2" (click)="UpdateProduct()">Actualizar ya!</button>
+      <button type="button" class="btn btn-danger col-lg-2" (click)="PostProduct()">Nuevo!</button>
+    </div>
+
     <div class="row justify-content-lg-center">
         <div class="input-group col-lg-3">
             <span class="input-group-btn">
-                <button type="button" class="btn btn-dark btn-number" (click)="DecreaseProduct()"><fa-icon [icon]="faMinus"></fa-icon></button>
+                <button type="button" class="btn btn-dark btn-number" (click)="DecreaseQuantity()"><fa-icon [icon]="faMinus"></fa-icon></button>
             </span>
-            <input type="number" class="form-control input-number" [(ngModel)]="quantityAmountOfProduct">
+            <input type="number" class="form-control input-number" [(ngModel)]="productCounter">
             <span class="input-group-btn">
-                <button type="button" class="btn btn-dark btn-number" (click)="IncreaseProduct()"><fa-icon [icon]="faPlus"></fa-icon></button>
+                <button type="button" class="btn btn-dark btn-number" (click)="IncreaseQuantity()"><fa-icon [icon]="faPlus"></fa-icon></button>
             </span>
         </div>
 
-      <button type="button" class="btn btn-primary col-lg-2" (click)="GetProduct()">Cargar Producto</button>
       <button type="button" class="btn btn-primary col-lg-2" (click)="NextProduct()">Siguiente</button>
-      <button type="button" class="btn btn-primary col-lg-2" (click)="AddToCart()">Comprar</button>
-      <button type="button" class="btn btn-primary col-lg-2" (click)="AddProduct()">A&ntilde;adir Producto</button>
-      <button type="button" class="btn btn-danger col-lg-2" (click)="RemoveProduct()">Remover Producto</button>
+      <button type="button" class="btn btn-primary col-lg-2" (click)="PreviousProduct()">Anterior</button>
+      <button type="button" class="btn btn-primary col-lg-2">Comprar</button>
+      <button type="button" class="btn btn-primary col-lg-2" (click)="ShowForm()">A&ntilde;adir Producto</button>
+      <button type="button" class="btn btn-danger col-lg-2" (click)="ShowForm()">Actualizar</button>
+      <button type="button" class="btn btn-danger col-lg-2" (click)="DeleteProduct()">Remover Producto</button>
     </div>
     
   </div>

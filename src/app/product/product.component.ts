@@ -20,6 +20,6 @@ export class ProductComponent implements OnInit {
   }
 
   GetProduct() {
-    this.webService.GetProduct(this.id).then((data:Product) => { this.selectedProduct = data; }).catch((err:string) => { alert("Error de Servidor.")});
+    this.webService.GetProductById(this.id).then((data:Product) => { this.selectedProduct = data; }).catch((err:string) => { alert("Error de Servidor.")});
   }
 }

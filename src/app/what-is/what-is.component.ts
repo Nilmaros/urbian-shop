@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
 import { WebServiceService } from '../services/web-service.service';
 import { Product } from '../models/product';
-import { ID } from '../models/ID';
 
 @Component({
   selector: 'app-what-is',
@@ -11,19 +10,18 @@ import { ID } from '../models/ID';
 })
 export class WhatIsComponent implements OnInit {
 
-  quantityAmountOfProduct:number = 1;
-  productId:ID = null; // id sent to api
-  totalProductsStored:number;
+  // Product variables
+  productCounter:number = 1;
   currentProduct:Product;
-  arrayOfIds:ID[];
-  currentId:number = 0;
+  productOffset:number = 0;
+  totalRowsInDatabase:number;
 
-  // New Product
-
+  // New-Update Product
   newImg:string;
   newDesc:string;
   newName:string;
   newPrice:number;
+  updatingProduct:boolean = false;
 
   // Font Awesome
   faPlus = faPlus;
@@ -31,50 +29,75 @@ export class WhatIsComponent implements OnInit {
   
   constructor(private webService:WebServiceService) { }
 
-  DecreaseProduct() {
-    if(this.quantityAmountOfProduct > 0) {
-      this.quantityAmountOfProduct --;
-    }else{
-      this.quantityAmountOfProduct = 0;
-    }
+  DecreaseQuantity() {
+    if(this.productCounter > 0) { this.productCounter --; }
+    else{ this.productCounter = 0; }
   }
 
-  IncreaseProduct() { this.quantityAmountOfProduct ++; }
+  IncreaseQuantity() { this.productCounter ++; }
 
   NextProduct() {
-    if(this.arrayOfIds[this.currentId] == this.arrayOfIds[this.totalProductsStored-1]) {
-      this.productId = this.arrayOfIds[0];
-    } else {
-      this.currentId++;
-    }
-    this.GetProduct();
+    if(this.productOffset < this.totalRowsInDatabase-1) { this.productOffset++; }
+    else { this.productOffset = 0; }
+
+    this.webService.GetProductByOffset(this.productOffset)
+      .then((data:Product) => { this.currentProduct = data[0]; })
+      .catch((err:string) => { console.log(err)});
   }
 
   PreviousProduct() {
-    if(this.arrayOfIds[this.currentId] == this.arrayOfIds[0]) {
-      this.productId = this.arrayOfIds[this.totalProductsStored-1];
-    } else {
-      this.currentId--;
-    }
-    this.GetProduct();
+    if(this.productOffset == 0) { this.productOffset = this.totalRowsInDatabase-1; }
+    else { this.productOffset--; };
+
+    this.webService.GetProductByOffset(this.productOffset)
+      .then((data:Product) => { this.currentProduct = data[0]; })
+      .catch((err:string) => { console.log(err)});
   }
 
-  AddProduct() {
-    this.webService.AddProduct(this.newImg, this.newDesc, this.newName, this.newPrice).then(() => { console.log("All goodz."); }).catch((err:string) => { console.log(err) });
+  PostProduct() {
+    this.webService.PostProduct(this.newImg, this.newDesc, this.newName, this.newPrice)
+      .then(() => { console.log("Product Posted."); })
+      .catch((err:string) => { console.log(err) });
+
+    this.webService.CountAllProducts()
+      .then((data:number) => { this.totalRowsInDatabase = data; })
+      .catch((err) => { console.log(err); });
+  }
+
+  DeleteProduct() {
+    this.webService.DeleteProduct(this.currentProduct.id)
+      .then(() => { console.log("Product Deleted."); })
+      .catch((err:string) => { console.log(err) });
+
+    this.webService.CountAllProducts()
+      .then((data:number) => { this.totalRowsInDatabase = data; })
+      .catch((err) => { console.log(err); });
+  }
+
+  UpdateProduct() {
+    if(this.newImg == null) { this.newImg = "empty"; }
+    if(this.newDesc == null) { this.newDesc = "empty"; }
+    if(this.newName == null) { this.newName = "empty"; }
+    if(this.newPrice == null) { this.newPrice = -1; }
+    console.log(this.newImg); console.log(this.newDesc); console.log(this.newName); console.log(this.newPrice);
+    this.webService.UpdateProduct(this.currentProduct.id, this.newImg, this.newDesc, this.newName, this.newPrice)
+      .then(() => { console.log("Product Updated."); })
+      .catch((err:string) => { console.log(err) });
+
+    this.updatingProduct = false;
+  }
+
+  ShowForm() {
+    this.updatingProduct = true;
   }
 
   ngOnInit() {
-    this.webService.HowManyProducts().then((data:number) => { this.totalProductsStored = data; }).catch((err:string) => { console.log("Error de Servidor")});
-    this.GetIds();
-  }
+    this.webService.GetProductByOffset(this.productOffset)
+      .then((data:Product) => { this.currentProduct = data[0]; })
+      .catch((err:string) => { console.log(err)});
 
-  GetProduct() {
-    this.webService.GetProduct(this.arrayOfIds[this.productId.id]).then((data:Product) => { this.currentProduct = data; }).catch((err:string) => { console.log("Error de Servidor.")});
-  }
-
-  GetIds() {
-    this.webService.GetIds()
-      .then((data:ID[]) => { this.arrayOfIds = data; this.productId = data[0]; this.GetProduct(); })
-      .catch((err:string) => { console.log("Error de Servidor.")});
+    this.webService.CountAllProducts()
+      .then((data:number) => { this.totalRowsInDatabase = data; })
+      .catch((err) => { console.log(err); });
   }
 }

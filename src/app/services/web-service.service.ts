@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Product } from '../models/product';
-import { ID } from '../models/ID';
 
 @Injectable({
   providedIn: 'root'
@@ -26,9 +25,9 @@ export class WebServiceService {
     });
   }
 
-  GetProduct(id:any){
+  CountAllProducts(){
     return new Promise((resolve, reject) => {
-      this.httpService.get<Product>(this.url+'/'+id).subscribe(
+      this.httpService.get<number>(this.url+'/all/count').subscribe(
         data => {
           resolve(data);
         },
@@ -40,23 +39,9 @@ export class WebServiceService {
     });
   }
 
-  GetIds() {
+  GetProductById(id:any){
     return new Promise((resolve, reject) => {
-      this.httpService.get<ID[]>(this.url+'/get/ids').subscribe(
-        data => {
-          resolve(data);
-        },
-        err => {
-          reject(err.message);
-          console.log(err.message);
-        }
-      );
-    });
-  }
-
-  AddProduct(img:string, desc:string, name:string, price:number){
-    return new Promise((resolve, reject) => {
-      this.httpService.post(this.url+'/new/',img+"/"+desc+"/"+name+"/"+price).subscribe(
+      this.httpService.get<Product>(this.url+'id/'+id).subscribe(
         data => {
           resolve(data);
         },
@@ -68,9 +53,9 @@ export class WebServiceService {
     });
   }
 
-  HowManyProducts(){
+  GetProductByOffset(offset:any){
     return new Promise((resolve, reject) => {
-      this.httpService.get<number>(this.url+'/count/products').subscribe(
+      this.httpService.get<Product>(this.url+'/offset/'+offset).subscribe(
         data => {
           resolve(data);
         },
@@ -81,4 +66,48 @@ export class WebServiceService {
       );
     });
   }
+
+  PostProduct(img:string, desc:string, name:string, price:number){
+    return new Promise((resolve, reject) => {
+      this.httpService.post(this.url+'/new',{ params: { img: img, desc: desc, name: name, price: price }, observe: 'response' }).subscribe(
+        data => {
+          resolve(data);
+        },
+        err => {
+          reject(err.message);
+          console.log (err.message);
+        }
+      );
+    });
+  }
+
+  DeleteProduct(id:any){
+    return new Promise((resolve, reject) => {
+      this.httpService.delete(this.url+'/'+id).subscribe(
+        data => {
+          resolve(data);
+        },
+        err => {
+          reject(err.message);
+          console.log (err.message);
+        }
+      );
+    });
+  }
+
+  UpdateProduct(id:any, img:string, desc:string, name:string, price:any){
+
+    return new Promise((resolve, reject) => {
+      this.httpService.post(this.url+'/update',{ "id": id, "img": img, "desc": desc, "name": name, "price": price }).subscribe(
+        data => {
+          resolve(data);
+        },
+        err => {
+          reject(err.message);
+          console.log (err.message);
+        }
+      );
+    });
+  }
+
 }
