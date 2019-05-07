@@ -67,15 +67,16 @@ export class WebServiceService {
     });
   }
 
-  PostProduct(img:string, desc:string, name:string, price:number){
+  PostProduct(product:Product){
     return new Promise((resolve, reject) => {
-      this.httpService.post(this.url+'/new',{ params: { img: img, desc: desc, name: name, price: price }, observe: 'response' }).subscribe(
+      this.httpService.post(this.url+'/new', product).subscribe(
         data => {
+          console.log(data);
           resolve(data);
         },
         err => {
           reject(err.message);
-          console.log (err.message);
+          console.log(err.message);
         }
       );
     });

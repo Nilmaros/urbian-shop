@@ -17,6 +17,7 @@ export class WhatIsComponent implements OnInit {
   totalRowsInDatabase:number;
 
   // New-Update Product
+  newProduct:Product;
   newImg:string;
   newDesc:string;
   newName:string;
@@ -55,9 +56,13 @@ export class WhatIsComponent implements OnInit {
   }
 
   PostProduct() {
-    this.webService.PostProduct(this.newImg, this.newDesc, this.newName, this.newPrice)
+    this.newProduct = { img:this.newImg, description:this.newDesc, price:this.newPrice, name:this.newName, id:0 };
+    this.webService.PostProduct(this.newProduct)
       .then(() => { console.log("Product Posted."); })
       .catch((err:string) => { console.log(err) });
+    // this.webService.PostProduct(this.newImg, this.newDesc, this.newName, this.newPrice)
+    //   .then(() => { console.log("Product Posted."); })
+    //   .catch((err:string) => { console.log(err) });
 
     this.webService.CountAllProducts()
       .then((data:number) => { this.totalRowsInDatabase = data; })
@@ -79,7 +84,6 @@ export class WhatIsComponent implements OnInit {
     if(this.newDesc == null) { this.newDesc = "empty"; }
     if(this.newName == null) { this.newName = "empty"; }
     if(this.newPrice == null) { this.newPrice = -1; }
-    console.log(this.newImg); console.log(this.newDesc); console.log(this.newName); console.log(this.newPrice);
     this.webService.UpdateProduct(this.currentProduct.id, this.newImg, this.newDesc, this.newName, this.newPrice)
       .then(() => { console.log("Product Updated."); })
       .catch((err:string) => { console.log(err) });
