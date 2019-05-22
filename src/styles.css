@@ -1,7 +1,11 @@
 /* You can add global styles to this file, and also import other style files */
 /* IMPORTS */
 @import '~bootstrap/dist/css/bootstrap.min.css';
+/* BUTTONS */
 
+.buttons {
+  color: black;
+}
 /* NAV */
 #mainNav {
     min-height: 56px;
