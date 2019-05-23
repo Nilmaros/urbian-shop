@@ -1,0 +1,8 @@
+<div [ngClass]="customClass || ''" class="modal" [ngStyle]="{display: show ? 'block' : 'none'}">
+  <div class="overlay" (click)="closeCallback()"></div>
+  <div class="modal_content">
+    <ng-content></ng-content>
+    <p>{{ productToEdit.name }}</p>
+    <input type="button" value="Save" class="btn btn-danger col-2" style="padding: 0.1rem 0.1rem 0.2rem 0.2rem;" (click)="closeCallback()">
+  </div>
+</div>

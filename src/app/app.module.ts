@@ -1,7 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ProductComponent } from './product/product.component';
@@ -12,8 +11,7 @@ import { TiendaComponent } from './tienda/tienda.component';
 import { ContactComponent } from './contact/contact.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { SimpleModalModule } from 'ngx-simple-modal';
-import { EditModalComponent } from './edit-modal/edit-modal.component';
+import { EditModalComponent } from './what-is/edit-modal/edit-modal.component';
 
 @NgModule({
   declarations: [
@@ -31,11 +29,7 @@ import { EditModalComponent } from './edit-modal/edit-modal.component';
     FormsModule,
     HttpClientModule,
     FontAwesomeModule,
-    BrowserAnimationsModule,
-    SimpleModalModule.forRoot({container: "modal-container"})
-  ],
-  entryComponents: [
-    EditModalComponent
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
