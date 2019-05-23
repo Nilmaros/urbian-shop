@@ -63,7 +63,7 @@ export class WhatIsComponent implements OnInit {
   
   constructor(private webService:WebServiceService, private SimpleModalService: SimpleModalService) { }
 
-  showAlert() {
+  Edit() {
     this.SimpleModalService.addModal(EditModalComponent, {title: 'Alert title!', message: 'Alert message!!!'});
   }
 
