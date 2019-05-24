@@ -12,6 +12,7 @@
       </div>
     </div>
 
+  <div *ngIf="!currentProduct"><h3>Loading...</h3></div>
   <div *ngIf="currentProduct" class="card mx-auto" style="width: 20rem;">
     <img class="card-img-top" [src]="currentProduct.img" [alt]="currentProduct.description" [@changing-product]=changingProduct>
     <div class="card-body">
@@ -30,7 +31,9 @@
         <input type="text" size="25" class="col-2" style="text-align: center; padding:0%;" value="1" [(ngModel)]="productCounter">
         <input type="button" value="+" class="btn btn-dark col-1" style="padding: 0.1rem 0.1rem 0.2rem 0.2rem;" (click)="IncreaseQuantity()">
         
+ 
         <app-modal [show]="showModal" [customClass]="'custom_modal_class'" [closeCallback]="toggleModal" [productToEdit]="currentProduct"></app-modal>
+
         
       <!-- <button type="button" class="btn btn-primary col-lg-2" (click)="NextProduct()">Siguiente</button>
       <button type="button" class="btn btn-primary col-lg-2" (click)="PreviousProduct()">Anterior</button>
@@ -42,22 +45,6 @@
     </div>
   </div>
 
-  <div  class="producto">
-    
-
-    <div *ngIf="updatingProduct">
-      <input type="text" [(ngModel)]="newImg">Img
-      <input type="text" [(ngModel)]="newDesc">Desc
-      <input type="text" [(ngModel)]="newName">Name
-      <input type="text" [(ngModel)]="newPrice">Price
-      <button type="button" class="btn btn-danger col-lg-2" (click)="UpdateProduct()">Actualizar ya!</button>
-      <button type="button" class="btn btn-danger col-lg-2" (click)="PostProduct()">Nuevo!</button>
-    </div>
-
-
-
-    
-  </div>
   <h3>Balloon Effect</h3>
     <div (click)="changeState()" style="width:100px;height:100px; border-radius: 100%; margin: 3rem; background-color: green" [@effect]=changingProduct></div>
     

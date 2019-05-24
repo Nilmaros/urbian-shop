@@ -52,7 +52,7 @@ export class WhatIsComponent implements OnInit {
   newDesc:string;
   newName:string;
   newPrice:number;
-  updatingProduct:boolean = false;
+ 
 
   // Font Awesome
   faPlus = faPlusSquare;
@@ -121,33 +121,23 @@ export class WhatIsComponent implements OnInit {
       .catch((err) => { console.log(err); });
   }
 
-  UpdateProduct() {
-    if(this.newImg == null) { this.newImg = "empty"; }
-    if(this.newDesc == null) { this.newDesc = "empty"; }
-    if(this.newName == null) { this.newName = "empty"; }
-    if(this.newPrice == null) { this.newPrice = -1; }
-    this.webService.UpdateProduct(this.currentProduct.id, this.newImg, this.newDesc, this.newName, this.newPrice)
-      .then(() => { console.log("Product Updated."); })
-      .catch((err:string) => { console.log(err) });
-
-    this.updatingProduct = false;
-  }
-
-  ShowForm() {
-    this.updatingProduct = true;
-  }
+  // ShowForm() {
+  //   this.updatingProduct = true;
+  // }
 
 changeState() {
   this.currentState = this.currentState === 'initial' ? 'final' : 'initial';
 }
 
 ngOnInit() {
-    this.webService.GetProductByOffset(this.productOffset)
-      .then((data:Product) => { this.currentProduct = data[0]; })
-      .catch((err:string) => { console.log(err)});
 
-    this.webService.CountAllProducts()
-      .then((data:number) => { this.totalRowsInDatabase = data; })
-      .catch((err) => { console.log(err); });
+  this.webService.GetProductByOffset(this.productOffset)
+  .then((data:Product) => { this.currentProduct = data[0]; })
+  .catch((err:string) => { console.log(err)});
+
+  this.webService.CountAllProducts()
+    .then((data:number) => { this.totalRowsInDatabase = data; })
+    .catch((err) => { console.log(err); });
+
   }
 }
