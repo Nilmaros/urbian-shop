@@ -21,10 +21,10 @@
       <p class="card-text">{{ currentProduct.description }}</p>
       
       <div class="row justify-content-center">
-          <input type="button" value="Prev" class="btn btn-secondary col-2" style="padding: 0.1rem 0.1rem 0.2rem 0.2rem;">
+          <input type="button" value="Prev" class="btn btn-secondary col-2" style="padding: 0.1rem 0.1rem 0.2rem 0.2rem;" (click)="PreviousProduct()">
           <input type="button" value="Edit" class="btn btn-info col-2" style="padding: 0.1rem 0.1rem 0.2rem 0.2rem;" (click)="toggleModal()">
           <input type="button" value="New" class="btn btn-info col-2" style="padding: 0.1rem 0.1rem 0.2rem 0.2rem;">
-          <input type="button" value="Next" class="btn btn-secondary col-2" style="padding: 0.1rem 0.1rem 0.2rem 0.2rem;">
+          <input type="button" value="Next" class="btn btn-secondary col-2" style="padding: 0.1rem 0.1rem 0.2rem 0.2rem;" (click)="NextProduct()">
       </div><br>
       <div class="row justify-content-center">
         <input type="button" value="-" class="btn btn-dark col-1" style="padding: 0.1rem 0.1rem 0.2rem 0.2rem;" (click)="DecreaseQuantity()">
@@ -32,7 +32,7 @@
         <input type="button" value="+" class="btn btn-dark col-1" style="padding: 0.1rem 0.1rem 0.2rem 0.2rem;" (click)="IncreaseQuantity()">
         
  
-        <app-modal [show]="showModal" [customClass]="'custom_modal_class'" [closeCallback]="toggleModal" [productToEdit]="currentProduct"></app-modal>
+        <app-modal (newProductEdited)="OnProductEdit($event)" [show]="showModal" [customClass]="'custom_modal_class'" [closeCallback]="toggleModal" [productToEdit]="currentProduct"></app-modal>
 
         
       <!-- <button type="button" class="btn btn-primary col-lg-2" (click)="NextProduct()">Siguiente</button>

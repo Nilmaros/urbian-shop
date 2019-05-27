@@ -63,6 +63,11 @@ export class WhatIsComponent implements OnInit {
   
   constructor(private webService:WebServiceService) { }
 
+  OnProductEdit(data:Product) {
+    this.currentProduct = data;
+    console.log(this.currentProduct);
+  }
+
   toggleModal = () => {
     this.showModal = !this.showModal;
   }
@@ -79,21 +84,30 @@ export class WhatIsComponent implements OnInit {
 
   NextProduct() {
     this.changingProduct = 'moving';
-    if(this.productOffset < this.totalRowsInDatabase-1) { this.productOffset++; this.changingProduct = 'start'; }
-    else { this.productOffset = 0; }
+    if(this.productOffset < this.totalRowsInDatabase-1)
+    {
+      this.productOffset++;
+    }
+    else
+    {
+      this.productOffset = 0;
+    }
 
     this.webService.GetProductByOffset(this.productOffset)
-      .then((data:Product) => { this.currentProduct = data[0]; })
+      .then((data:Product) =>
+      {
+        this.currentProduct = data[0]; this.changingProduct = 'start';
+      })
       .catch((err:string) => { console.log(err)});
   }
 
   PreviousProduct() {
     this.changingProduct = 'moving';
-    if(this.productOffset == 0) { this.productOffset = this.totalRowsInDatabase-1; this.changingProduct = 'start'; }
+    if(this.productOffset == 0) { this.productOffset = this.totalRowsInDatabase-1; }
     else { this.productOffset--; };
 
     this.webService.GetProductByOffset(this.productOffset)
-      .then((data:Product) => { this.currentProduct = data[0]; })
+      .then((data:Product) => { this.currentProduct = data[0]; this.changingProduct = 'start'; })
       .catch((err:string) => { console.log(err)});
   }
 

@@ -1,10 +1,10 @@
 <div [ngClass]="customClass || ''" class="modal" [ngStyle]="{display: show ? 'block' : 'none'}">
   <div class="overlay" (click)="closeCallback()"></div>
   <div class="modal_content">
-      <input type="text" [(ngModel)]="updateImg">Img
-      <input type="text" [(ngModel)]="updateDesc">Desc
-      <input type="text" [(ngModel)]="updateName">Name
-      <input type="text" [(ngModel)]="updatePrice">Price
-    <input type="button" value="Save" class="btn btn-danger col-2" style="padding: 0.1rem 0.1rem 0.2rem 0.2rem;" (click)="closeCallback()">
+      <input type="text" [(ngModel)]="editProduct.img" required>
+      <input type="text" [(ngModel)]="editProduct.description" required>
+      <input type="text" [(ngModel)]="editProduct.name" required>
+      <input type="text" [(ngModel)]="editProduct.price" required>
+    <input type="button" value="Save" class="btn btn-danger col-2" style="padding: 0.1rem 0.1rem 0.2rem 0.2rem;" (click)="UpdateProduct()">
   </div>
 </div>
