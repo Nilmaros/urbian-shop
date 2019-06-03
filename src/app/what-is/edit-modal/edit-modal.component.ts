@@ -4,21 +4,15 @@ import { WebServiceService } from '../../services/web-service.service';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
-  selector: 'app-modal',
+  selector: 'edit-modal',
   templateUrl: './edit-modal.component.html',
   styleUrls: ['./edit-modal.component.css']
 })
 export class EditModalComponent implements OnInit {
 
-  @Input() productToEdit:Product;
+  @Input() currentProduct:Product;
   @Output() newProductEdited:EventEmitter<Product> = new EventEmitter();
   editProduct:Product;
-
-  //Update Product
-  // updateImg:string = this.productToEdit.img;
-  // updateDesc:string = this.productToEdit.description;
-  // updateName:string = this.productToEdit.name;
-  // updatePrice:number = this.productToEdit.price;
 
   constructor(private webService:WebServiceService, private activeModal:NgbActiveModal) { }
 
@@ -41,24 +35,11 @@ export class EditModalComponent implements OnInit {
   {
     this.editProduct =
     {
-      id: this.productToEdit.id,
-      img: this.productToEdit.img,
-      description: this.productToEdit.description,
-      name: this.productToEdit.name,
-      price: this.productToEdit.price
+      id: this.currentProduct.id,
+      img: this.currentProduct.img,
+      description: this.currentProduct.description,
+      name: this.currentProduct.name,
+      price: this.currentProduct.price
     }
   }
-
-  ngOnChange()
-  {
-    this.editProduct =
-    {
-      id: this.productToEdit.id,
-      img: this.productToEdit.img,
-      description: this.productToEdit.description,
-      name: this.productToEdit.name,
-      price: this.productToEdit.price
-    }
-  }
-
 }

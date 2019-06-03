@@ -64,8 +64,12 @@ export class WhatIsComponent implements OnInit {
 
   OpenMyEditModal() {
     const modalRef = this.editModal.open(EditModalComponent);
-    modalRef.componentInstance.productToEdit = this.currentProduct;
+    modalRef.componentInstance.currentProduct = this.currentProduct;
+    modalRef.componentInstance.newProductEdited.subscribe((a:Product) => {
+      this.currentProduct = a;
+    })
   }
+
   OnProductEdit(data:Product) {
     this.currentProduct = data;
     console.log(this.currentProduct);
