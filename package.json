@@ -24,6 +24,7 @@
     "@fortawesome/angular-fontawesome": "^0.3.0",
     "@fortawesome/fontawesome-svg-core": "^1.2.18",
     "@fortawesome/free-solid-svg-icons": "^5.8.2",
+    "@ng-bootstrap/ng-bootstrap": "^4.2.1",
     "add": "^2.0.6",
     "angular-font-awesome": "^3.1.2",
     "bootstrap": "^4.3.1",
