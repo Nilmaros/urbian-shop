@@ -1,6 +1,5 @@
-<div [ngClass]="customClass || ''" class="modal" [ngStyle]="{display: show ? 'block' : 'none'}">
-  <div class="overlay" (click)="closeCallback()"></div>
-  <div class="modal_content">
+<div [ngClass]="customClass || ''">
+  <div>
       <input type="text" [(ngModel)]="editProduct.img" required>
       <input type="text" [(ngModel)]="editProduct.description" required>
       <input type="text" [(ngModel)]="editProduct.name" required>

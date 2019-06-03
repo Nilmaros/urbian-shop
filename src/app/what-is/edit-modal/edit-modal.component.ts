@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, OnChanges, Output, EventEmitter } from '@angular/core';
 import { Product } from '../../models/product';
 import { WebServiceService } from '../../services/web-service.service';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-modal',
@@ -8,9 +9,7 @@ import { WebServiceService } from '../../services/web-service.service';
   styleUrls: ['./edit-modal.component.css']
 })
 export class EditModalComponent implements OnInit {
-  @Input() show = false;
-  @Input() customClass = '';
-  @Input() closeCallback = () => (false);
+
   @Input() productToEdit:Product;
   @Output() newProductEdited:EventEmitter<Product> = new EventEmitter();
   editProduct:Product;
@@ -21,7 +20,7 @@ export class EditModalComponent implements OnInit {
   // updateName:string = this.productToEdit.name;
   // updatePrice:number = this.productToEdit.price;
 
-  constructor(private webService:WebServiceService) { }
+  constructor(private webService:WebServiceService, private activeModal:NgbActiveModal) { }
 
   UpdateProduct() {
     this.webService.UpdateProduct(this.editProduct.id, this.editProduct.img, this.editProduct.description, this.editProduct.name, this.editProduct.price)
@@ -29,7 +28,7 @@ export class EditModalComponent implements OnInit {
       {
         console.log("Product Updated.");
         this.newProductEdited.emit(this.editProduct);
-        this.closeCallback();
+        this.activeModal.close();
       })
       .catch((err:string) =>
       {
