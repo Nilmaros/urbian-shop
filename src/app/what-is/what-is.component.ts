@@ -75,7 +75,8 @@ export class WhatIsComponent implements OnInit {
     });
   }
 
-  OpenNewModal() {
+  OpenNewModal()
+  {
     const modalRef = this.editModal.open(NewModalComponent);
     modalRef.componentInstance.currentProduct = this.currentProduct;
     modalRef.componentInstance.eventNewProduct.subscribe((a:Product) =>
@@ -89,24 +90,40 @@ export class WhatIsComponent implements OnInit {
     });
   }
 
-  OnProductEdit(data:Product) {
+  OnProductEdit(data:Product)
+  {
     this.currentProduct = data;
     console.log(this.currentProduct);
   }
 
-  DecreaseQuantity() {
-    if(this.productCounter > 0) { this.productCounter --; }
-    else{ this.productCounter = 0; }
+  DecreaseQuantity()
+  {
+    if(this.productCounter > 0)
+    {
+      this.productCounter --;
+    }
+    else
+    {
+      this.productCounter = 0;
+    }
   }
 
-  IncreaseQuantity() { 
-    if(this.productCounter < 99) { this.productCounter ++; }
-    else{ this.productCounter = 99; }
-   }
+  IncreaseQuantity()
+  { 
+    if(this.productCounter < 99)
+    {
+      this.productCounter ++;
+    }
+    else
+    {
+      this.productCounter = 99;
+    }
+  }
 
-  NextProduct() {
+  NextProduct()
+  {
     this.changingProduct = 'moving';
-    if(this.productOffset < this.totalRowsInDatabase-1)
+    if (this.productOffset < this.totalRowsInDatabase-1)
     {
       this.productOffset++;
     }
@@ -148,12 +165,13 @@ export class WhatIsComponent implements OnInit {
       });
   }
 
-changeState() {
+changeState()
+{
   this.currentState = this.currentState === 'initial' ? 'final' : 'initial';
 }
 
-ngOnInit() {
-
+ngOnInit()
+{
   this.webService.GetProductByOffset(this.productOffset)
   .then((data:Product) => { this.currentProduct = data[0]; })
   .catch((err:string) => { console.log(err)});
@@ -161,6 +179,5 @@ ngOnInit() {
   this.webService.CountAllProducts()
     .then((data:number) => { this.totalRowsInDatabase = data; })
     .catch((err) => { console.log(err); });
-
   }
 }
