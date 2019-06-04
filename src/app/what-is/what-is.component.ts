@@ -5,6 +5,7 @@ import { Product } from '../models/product';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { EditModalComponent } from './edit-modal/edit-modal.component';
+import { NewModalComponent } from './new-modal/new-modal.component';
 
 @Component({
   selector: 'app-what-is',
@@ -67,15 +68,25 @@ export class WhatIsComponent implements OnInit {
     modalRef.componentInstance.currentProduct = this.currentProduct;
     modalRef.componentInstance.newProductEdited.subscribe((a:Product) => {
       this.currentProduct = a;
-    })
+    });
+    modalRef.componentInstance.totalRowsInDatabase.subscribe((a:number) => {
+      this.totalRowsInDatabase = a;
+      this.PreviousProduct();
+    });
   }
 
   OpenNewModal() {
-    const modalRef = this.editModal.open(EditModalComponent);
+    const modalRef = this.editModal.open(NewModalComponent);
     modalRef.componentInstance.currentProduct = this.currentProduct;
-    modalRef.componentInstance.newProductEdited.subscribe((a:Product) => {
+    modalRef.componentInstance.eventNewProduct.subscribe((a:Product) =>
+    {
       this.currentProduct = a;
-    })
+      this.currentProduct.img = '../assets/img/' + this.currentProduct.img;
+    });
+    modalRef.componentInstance.totalRowsInDatabase.subscribe((a:number) =>
+    {
+      this.totalRowsInDatabase = a;
+    });
   }
 
   OnProductEdit(data:Product) {
@@ -112,43 +123,30 @@ export class WhatIsComponent implements OnInit {
       .catch((err:string) => { console.log(err)});
   }
 
-  PreviousProduct() {
+  PreviousProduct()
+  {
     this.changingProduct = 'moving';
-    if(this.productOffset == 0) { this.productOffset = this.totalRowsInDatabase-1; }
-    else { this.productOffset--; };
+
+    if(this.productOffset == 0)
+    {
+      this.productOffset = this.totalRowsInDatabase-1;
+    }
+    else
+    {
+      this.productOffset--;
+    };
 
     this.webService.GetProductByOffset(this.productOffset)
-      .then((data:Product) => { this.currentProduct = data[0]; this.changingProduct = 'start'; })
-      .catch((err:string) => { console.log(err)});
+      .then((data:Product) =>
+      {
+        this.currentProduct = data[0];
+        this.changingProduct = 'start';
+      })
+      .catch((err:string) =>
+      {
+        console.log(err)
+      });
   }
-
-  PostProduct() {
-    this.newProduct = { img:this.newImg, description:this.newDesc, price:this.newPrice, name:this.newName, id:0 };
-    this.webService.PostProduct(this.newProduct)
-      .then(() => { console.log("Product Posted."); })
-      .catch((err:string) => { console.log(err) });
-    // this.webService.PostProduct(this.newImg, this.newDesc, this.newName, this.newPrice)
-    //   .then(() => { console.log("Product Posted."); })
-    //   .catch((err:string) => { console.log(err) });
-
-    this.webService.CountAllProducts()
-      .then((data:number) => { this.totalRowsInDatabase = data; })
-      .catch((err) => { console.log(err); });
-  }
-
-  DeleteProduct() {
-    this.webService.DeleteProduct(this.currentProduct.id)
-      .then(() => { console.log("Product Deleted."); })
-      .catch((err:string) => { console.log(err) });
-
-    this.webService.CountAllProducts()
-      .then((data:number) => { this.totalRowsInDatabase = data; })
-      .catch((err) => { console.log(err); });
-  }
-
-  // ShowForm() {
-  //   this.updatingProduct = true;
-  // }
 
 changeState() {
   this.currentState = this.currentState === 'initial' ? 'final' : 'initial';

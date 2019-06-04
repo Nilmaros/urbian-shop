@@ -10,36 +10,46 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class NewModalComponent implements OnInit {
 
-  @Input() currentProduct:Product;
-  @Output() newProductEdited:EventEmitter<Product> = new EventEmitter();
-  editProduct:Product;
+  @Output() totalRowsInDatabase:EventEmitter<number> = new EventEmitter();
+  @Output() eventNewProduct:EventEmitter<Product> = new EventEmitter();
+  newProduct:Product;
 
   constructor(private webService:WebServiceService, private activeModal:NgbActiveModal) { }
 
-  UpdateProduct() {
-    this.webService.UpdateProduct(this.editProduct.id, this.editProduct.img, this.editProduct.description, this.editProduct.name, this.editProduct.price)
+  PostProduct()
+  {
+    this.webService.PostProduct(this.newProduct)
       .then(() =>
       {
-        console.log("Product Updated.");
-        this.newProductEdited.emit(this.editProduct);
-        this.activeModal.close();
-      })
+        console.log("Product Posted.");
+        this.eventNewProduct.emit(this.newProduct);
+        this.webService.CountAllProducts()
+          .then((totalRows:number) =>
+          {
+            this.totalRowsInDatabase.emit(totalRows);
+          })
+          .catch((err) =>
+          {
+            console.log(err);
+          });
+          })
       .catch((err:string) =>
       {
         console.log(err)
       });
 
+    this.activeModal.close();
   }
 
   ngOnInit()
   {
-    this.editProduct =
+    this.newProduct =
     {
-      id: this.currentProduct.id,
-      img: this.currentProduct.img,
-      description: this.currentProduct.description,
-      name: this.currentProduct.name,
-      price: this.currentProduct.price
-    }
+      name: "",
+      description: "",
+      img: "",
+      price: 0,
+      id: 0
+    };
   }
 }

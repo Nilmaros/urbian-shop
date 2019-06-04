@@ -12,6 +12,7 @@ export class EditModalComponent implements OnInit {
 
   @Input() currentProduct:Product;
   @Output() newProductEdited:EventEmitter<Product> = new EventEmitter();
+  @Output() totalRowsInDatabase:EventEmitter<number> = new EventEmitter();
   editProduct:Product;
 
   constructor(private webService:WebServiceService, private activeModal:NgbActiveModal) { }
@@ -28,7 +29,29 @@ export class EditModalComponent implements OnInit {
       {
         console.log(err)
       });
+  }
 
+  DeleteProduct()
+  {
+    this.webService.DeleteProduct(this.editProduct.id)
+      .then(() =>
+      {
+        console.log("Product Deleted.");
+        this.webService.CountAllProducts()
+          .then((totalRows:number) =>
+          {
+            this.totalRowsInDatabase.emit(totalRows);
+          })
+          .catch((err) =>
+          {
+            console.log(err);
+          });
+        this.activeModal.close();
+      })
+      .catch((err:string) =>
+      {
+        console.log(err)
+      });
   }
 
   ngOnInit()
