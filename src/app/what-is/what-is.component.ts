@@ -62,7 +62,15 @@ export class WhatIsComponent implements OnInit {
 
   constructor(private webService:WebServiceService, private editModal:NgbModal) { }
 
-  OpenMyEditModal() {
+  OpenEditModal() {
+    const modalRef = this.editModal.open(EditModalComponent);
+    modalRef.componentInstance.currentProduct = this.currentProduct;
+    modalRef.componentInstance.newProductEdited.subscribe((a:Product) => {
+      this.currentProduct = a;
+    })
+  }
+
+  OpenNewModal() {
     const modalRef = this.editModal.open(EditModalComponent);
     modalRef.componentInstance.currentProduct = this.currentProduct;
     modalRef.componentInstance.newProductEdited.subscribe((a:Product) => {

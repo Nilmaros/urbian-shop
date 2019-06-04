@@ -1,0 +1,9 @@
+<div [ngClass]="customClass || ''">
+  <div>
+      <input type="text" [(ngModel)]="editProduct.img" required>
+      <input type="text" [(ngModel)]="editProduct.description" required>
+      <input type="text" [(ngModel)]="editProduct.name" required>
+      <input type="text" [(ngModel)]="editProduct.price" required>
+    <input type="button" value="Save" class="btn btn-danger col-2" style="padding: 0.1rem 0.1rem 0.2rem 0.2rem;" (click)="UpdateProduct()">
+  </div>
+</div>

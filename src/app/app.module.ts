@@ -12,6 +12,7 @@ import { ContactComponent } from './contact/contact.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { EditModalComponent } from './what-is/edit-modal/edit-modal.component';
+import { NewModalComponent } from './what-is/new-modal/new-modal.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
@@ -22,6 +23,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     GameComponent,
     TiendaComponent,
     EditModalComponent,
+    NewModalComponent,
     ContactComponent
   ],
   imports: [
@@ -35,6 +37,6 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
   ],
   providers: [],
   bootstrap: [AppComponent],
-  entryComponents: [EditModalComponent]
+  entryComponents: [EditModalComponent, NewModalComponent]
 })
 export class AppModule { }
