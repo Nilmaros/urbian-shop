@@ -14,7 +14,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { EditModalComponent } from './what-is/edit-modal/edit-modal.component';
 import { NewModalComponent } from './what-is/new-modal/new-modal.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { ShoppingCartModule } from 'ng-shopping-cart';
 
 @NgModule({
   declarations: [
@@ -28,14 +27,6 @@ import { ShoppingCartModule } from 'ng-shopping-cart';
     ContactComponent
   ],
   imports: [
-    ShoppingCartModule.forRoot({
-      // itemType: MyCartItemClass,
-      serviceType: 'localStorage',
-      serviceOptions: {
-        storageKey: 'NgShoppingCart',
-        clearOnError: true
-      }
-    }),
     BrowserModule,
     AppRoutingModule,
     FormsModule,
