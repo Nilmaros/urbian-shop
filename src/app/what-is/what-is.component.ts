@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { faPlusSquare, faMinusSquare } from '@fortawesome/free-solid-svg-icons';
 import { WebServiceService } from '../services/web-service.service';
+import { CartService } from '../services/cart.service';
 import { Product } from '../models/product';
+import { Item } from '../models/item';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { EditModalComponent } from './edit-modal/edit-modal.component';
@@ -56,12 +58,14 @@ export class WhatIsComponent implements OnInit {
   newName:string;
   newPrice:number;
  
-
   // Font Awesome
   faPlus = faPlusSquare;
   faMinus = faMinusSquare;
 
-  constructor(private webService:WebServiceService, private editModal:NgbModal) { }
+  // Cart Variables
+  cartItem:Item;
+
+  constructor(private webService:WebServiceService, private editModal:NgbModal, private cartService:CartService) { }
 
   OpenEditModal() {
     const modalRef = this.editModal.open(EditModalComponent);
@@ -94,6 +98,11 @@ export class WhatIsComponent implements OnInit {
   {
     this.currentProduct = data;
     console.log(this.currentProduct);
+  }
+
+  AddToCart()
+  {
+    this.cartService.SetCartItem(this.cartItem);
   }
 
   DecreaseQuantity()
