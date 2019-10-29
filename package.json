@@ -31,7 +31,7 @@
     "core-js": "^2.6.9",
     "font-awesome": "^4.7.0",
     "rxjs": "~6.3.3",
-    "yarn": "^1.16.0",
+    "yarn": "^1.17.3",
     "zone.js": "~0.8.26"
   },
   "devDependencies": {
